@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ORB_SLAM2,SLAM,机器视觉,计算机科学," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文是针对ORB_SLAM2在Windows操作系统上如何编译和运行的一些说明。主要步骤说明在编译流程一节。 参考资料[1]《深入理解图优化与g2o》[2]《Yarten - CSDN博客》[3]《Fix Visual Studio 2013 crashes #56 - g2o/issues》[4]《Fatal Error C1001》 必要组件编译ORB_SLAM2之前需要以下第三方组件，这些组">
+<meta name="keywords" content="ORB_SLAM2,SLAM,机器视觉,计算机科学">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ORB_SLAM2 在 Windows 下编译">
+<meta property="og:url" content="http://viewro.github.io/计算机科学/机器视觉/orb-slam2/index.html">
+<meta property="og:site_name" content="ViewRO Wiki">
+<meta property="og:description" content="本文是针对ORB_SLAM2在Windows操作系统上如何编译和运行的一些说明。主要步骤说明在编译流程一节。 参考资料[1]《深入理解图优化与g2o》[2]《Yarten - CSDN博客》[3]《Fix Visual Studio 2013 crashes #56 - g2o/issues》[4]《Fatal Error C1001》 必要组件编译ORB_SLAM2之前需要以下第三方组件，这些组">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-06-05T08:34:43.311Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ORB_SLAM2 在 Windows 下编译">
+<meta name="twitter:description" content="本文是针对ORB_SLAM2在Windows操作系统上如何编译和运行的一些说明。主要步骤说明在编译流程一节。 参考资料[1]《深入理解图优化与g2o》[2]《Yarten - CSDN博客》[3]《Fix Visual Studio 2013 crashes #56 - g2o/issues》[4]《Fatal Error C1001》 必要组件编译ORB_SLAM2之前需要以下第三方组件，这些组">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://viewro.github.io/计算机科学/机器视觉/orb-slam2/"/>
+
+
+
+
+
+  <title>ORB_SLAM2 在 Windows 下编译 | ViewRO Wiki</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ViewRO Wiki</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://viewro.github.io/计算机科学/机器视觉/orb-slam2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ViewRO Technical Dept.">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ViewRO Wiki">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ORB_SLAM2 在 Windows 下编译</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-05T14:38:08+08:00">
+                2018-06-05
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-06-05T16:34:43+08:00">
+                2018-06-05
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/计算机科学/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机科学</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/计算机科学/机器视觉/" itemprop="url" rel="index">
+                    <span itemprop="name">机器视觉</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,233
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  14
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文是针对ORB_SLAM2在Windows操作系统上如何编译和运行的一些说明。主要步骤说明在编译流程一节。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>[1]<a href="https://www.cnblogs.com/gaoxiang12/p/5304272.html" target="_blank" rel="noopener">《深入理解图优化与g2o》</a><br>[2]<a href="https://blog.csdn.net/yfic000" target="_blank" rel="noopener">《Yarten - CSDN博客》</a><br>[3]<a href="https://github.com/RainerKuemmerle/g2o/issues/56" target="_blank" rel="noopener">《Fix Visual Studio 2013 crashes #56 - g2o/issues》</a><br>[4]<a href="https://msdn.microsoft.com/en-us/library/y19zxzb2.aspx" target="_blank" rel="noopener">《Fatal Error C1001》</a></p>
+<h2 id="必要组件"><a href="#必要组件" class="headerlink" title="必要组件"></a>必要组件</h2><p>编译ORB_SLAM2之前需要以下第三方组件，这些组件可以从Github上克隆：</p>
+<ul>
+<li><strong>Eigen3</strong>：用来进行线性代数、矩阵、向量操作等运算的C++类库，基于模板因此没有<code>.lib</code>文件，只需引入头文件。</li>
+<li><strong>OpenCV</strong>：用来处理计算机图像且包含计算机视觉算法的C++类库。</li>
+<li><strong>DBoW2</strong>：用于将图像转换为低维向量的压缩信息的类库，通过这种方式能够更简单比较两个图像之间的相似度。</li>
+<li><strong>g2o</strong>：用于图优化的C++类库。</li>
+<li><strong>Pangolin</strong>：基于OpenGL的封装类库，能够处理视频输入和输出。</li>
+</ul>
+<h3 id="可选组件"><a href="#可选组件" class="headerlink" title="可选组件"></a>可选组件</h3><p>由于ORB_SLAM2中自带了修改过的DBoW2和g2o库，如果需要自己去克隆和编译（不推荐）DBoW2和D</p>
+<ul>
+<li><strong>Boost</strong>：STL的延伸，基于STL提供的算法封装工具类，可以用于完成比较具体的工作。</li>
+</ul>
+<h2 id="编译基础"><a href="#编译基础" class="headerlink" title="编译基础"></a>编译基础</h2><p>在Windows操作系统上进行编译时，需要注意以下几点：</p>
+<ul>
+<li>检查工程文件内的<code>CMakeList.txt</code>文件，如果存在<code>FIND_PACKAGE</code>语句则直接删除。对于<code>TARGET_LINK_LIBRARIES</code>和<code>INCLUDE_DIRECTORIES</code>等指令，可以将里面包含的CMake变量改成系统环境变量（即<code>$ENV{}</code>格式的变量）。</li>
+<li><p>使用CMake构建工程时，尽量构建<code>X64</code>模式的工程，如下通过<code>Win64</code>的方式来指定目标平台：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ../src/build</span></span><br><span class="line">cmake .. -G <span class="string">"Visual Studio 15 2017 Win64"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在编译之前，确保项目属性中<code>C/C++</code>标签内的<code>命令行</code>选项、<code>链接器</code>（或者<code>库管理器</code>）标签内的<code>命令行</code>选项内是否包含<code>/machine</code>参数，需要统一成<code>/machine:X64</code>。</p>
+</li>
+</ul>
+<h2 id="编译流程"><a href="#编译流程" class="headerlink" title="编译流程"></a>编译流程</h2><h3 id="安装CMake"><a href="#安装CMake" class="headerlink" title="安装CMake"></a>安装CMake</h3><p>CMake作为一种项目管理工具，可以从官方网站下载和安装。安装后可以通过<strong>命令提示符</strong>或<strong>图形界面（CMake GUI）</strong>来针对克隆下来的<code>CMakeList.txt</code>进行项目构建。CMake的具体使用方式可以参考<a href="https://app.yinxiang.com/shard/s60/nl/12069297/51116cbf-a20f-46fb-8832-6e5213789a56" target="_blank" rel="noopener">CMake教程</a>。</p>
+<h3 id="编译OpenCV"><a href="#编译OpenCV" class="headerlink" title="编译OpenCV"></a>编译OpenCV</h3><p>编译OpenCV的过程通常没有太多的问题，只需要注意在<code>Release X64</code>模式下编译成功，并且使用<code>多线程MT</code>运行库。实际上目前还是推荐从OpenCV官网上下载最新版的编译好的二进制文件。</p>
+<h3 id="编译Pangolin"><a href="#编译Pangolin" class="headerlink" title="编译Pangolin"></a>编译Pangolin</h3><p>编译Pangolin的过程建议通过以下步骤进行：</p>
+<ol>
+<li>通过CMake构建<code>X64</code>工程文件，注意如果提示<code>file problem creating directory</code>错误，需要手动去<code>C:/Program Files</code>文件夹内新建<code>Pangolin</code>文件夹。</li>
+<li>构建完毕后，<strong>确保使用管理员权限打开工程文件，这样才能确保<code>__glew</code>、<code>__zlib</code>、<code>__libjpeg</code>、<code>__libpng</code>等工程正确编译，防止出现MSB3073错误</strong>。</li>
+<li>选择目标为<code>Relase X64</code>，运行库设置为<code>多线程MT</code>，并且将<code>pangolin</code>项目设为启动项目。</li>
+<li>设置<code>pangolin</code>的附加包含目录，如下，其中<code>${Pangolin}</code>代表克隆后的Pangolin工程根目录：</li>
+</ol>
+<ul>
+<li><strong>${Pangolin}/include</strong></li>
+<li><strong>${Pangolin}/build/src/include</strong></li>
+<li><strong>C:/Program Files/Pangolin/include</strong>，该文件夹为空，可以不包含。</li>
+<li><strong>${Pangolin}/build/external/glew/src/__glew/include</strong>，如果不包含不提示错误，可以不包含。</li>
+</ul>
+<ol start="5">
+<li>右键点击<code>重新生成</code>，或者点击<code>本地Windows调试器</code>，进行Pangolin的生成过程。</li>
+</ol>
+<p>编译过程中可能会发生以下的问题：</p>
+<blockquote>
+<p>C1083 无法打开包括文件：jconfig.h：No such file or directory</p>
+</blockquote>
+<p><strong>解决方法</strong>：将<code>${Pangolin}/build/external/libjpeg/src/__libjpeg/</code>文件夹内的<code>jconfig.txt</code>文件改成<code>jconfig.h</code>。</p>
+<blockquote>
+<p>C1083 无法打开包括文件：pnglibconf.h：No such file or directory</p>
+</blockquote>
+<p><strong>解决方法</strong>：从Github上获取<code>pnglibconf.h</code>文件，并放到<code>${Pangolin}/build/external/libpng/src/__libpng</code>文件夹中。</p>
+<h3 id="编译Eigen3"><a href="#编译Eigen3" class="headerlink" title="编译Eigen3"></a>编译Eigen3</h3><p>该工程是基于模板的工程，只需要作为包含目录引用即可，不需要进行编译和引用依赖库。</p>
+<h3 id="编译DBoW2"><a href="#编译DBoW2" class="headerlink" title="编译DBoW2"></a>编译DBoW2</h3><p>这里建议使用ORB_SLAM2自带的DBoW2类库，该类库针对ORB_SLAM2进行了修改。而编译该类库需要以下几种步骤：</p>
+<ol>
+<li>通过CMake构建<code>X64</code>工程文件，注意构建之前在<code>CMakeList.txt</code>文件中寻找有关OpenCV的<code>FIND_PACKAGE</code>指令并删除，然后建议通过<code>INCLUDE_DIRECTORIES</code>和<code>TARGET_LINK_LIBRARIES</code>指令中添加OpenCV的包含目录和依赖库目录。</li>
+<li>打开工程文件，选择目标为<code>Release X64</code>，运行库设置为<code>多线程MT</code>，在命令行中，并且将DBoW2设置为启动项目。</li>
+<li>确保OpenCV的头文件和依赖库正确添加。</li>
+<li><p>创建并编写一个<code>DBoW2Exports.h</code>头文件用于API声明，如下，<strong>使用宏定义之前需要保证在工程属性的<code>预处理器</code>一项中添加预处理器定义<code>DBOW2_EXPORTS</code>来确保API声明生效</strong>：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> DBOW2_EXPORTS</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> DBOW2_API __declspec(dllexport)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> DBOW2_API __declspec(dllimport)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对工程内的头文件添加API声明，针对以下类型将声明<code>class XXX</code>改为<code>class DBOW2_API XXX</code>：</p>
+</li>
+</ol>
+<ul>
+<li><strong>BowVector.h</strong>：修改<code>BowVector</code>类。</li>
+<li><strong>FeatureVector.h</strong>：修改<code>FeatureVector</code>类。</li>
+<li><strong>FORB.h</strong>：修改<code>FORB</code>类。</li>
+<li><strong>Random.h</strong>：修改<code>Random</code>、<code>UnrepeatedRandomizer</code>等类。</li>
+<li><strong>ScoringObjects.h</strong>：修改<code>GeneralScoring</code>类型，并且修改所有前缀为<code>__SCORING_CLASS</code>宏的类型。</li>
+<li><strong>Timestamp.h</strong>：修改<code>Timestamp</code>类。</li>
+</ul>
+<ol start="6">
+<li>右键点击DBoW2项目并<code>重新生成</code>，或者点击<code>本地Windows调试器</code>来编译工程。</li>
+</ol>
+<p>编译过程中可能会发生以下问题：</p>
+<blockquote>
+<p>C1083 无法打开包括文件：stdint-gcc.h：No such file or directory</p>
+</blockquote>
+<p><strong>解决方法</strong>：将<code>stdint-gcc.h</code>改为<code>stdint.h</code>。</p>
+<h3 id="编译g2o"><a href="#编译g2o" class="headerlink" title="编译g2o"></a>编译g2o</h3><p>这里建议使用ORB_SLAM2自带的g2o类库，该类库针对ORB_SLAM2进行了修改。而编译该类库需要以下几种步骤：</p>
+<ol>
+<li>通过CMake构建<code>X64</code>工程文件，注意构建之前在<code>CMakeList.txt</code>文件中寻找有关Eigen的<code>FIND_PACKAGE</code>指令并删除，然后建议通过<code>INCLUDE_DIRECTORIES</code>和<code>TARGET_LINK_LIBRARIES</code>指令中添加Eigen的包含目录。</li>
+<li>打开工程文件，选择目标为<code>Release X64</code>，运行库设置为<code>多线程MT</code>，并且将g2o设置为启动项目。</li>
+<li>打开<code>C/C++</code>中的<code>命令行</code>页面，删除<code>/W</code>参数。</li>
+<li><p><strong>找到<code>sparse_block_matrix.hpp</code>、<code>sparse_block_matrix_diagonal.h</code>、<code>matrix_operations.h</code>等文件，修改如下模板函数，避免Visual Studio在编译过程中无法识别具体类型而报C1001错误</strong>：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// sparse_block_matrix.hpp, Line 273</span></span><br><span class="line"><span class="comment">// internal::axpy(*a, srcVec, srcOffset, destVec, destOffset);</span></span><br><span class="line">internal::<span class="keyword">template</span> axpy&lt;<span class="keyword">typename</span> SparseBlockMatrix&lt;MatrixType&gt;::SparseMatrixBlock&gt;(*a, srcVec, srcOffset, destVec, destOffset);</span><br><span class="line"><span class="comment">// sparse_block_matrix.hpp, Line 275</span></span><br><span class="line"><span class="comment">// internal::atxpy(*a, srcVec, destOffset, destVec, srcOffset);</span></span><br><span class="line">internal::<span class="keyword">template</span> atxpy&lt;<span class="keyword">typename</span> SparseBlockMatrix&lt;MatrixType&gt;::SparseMatrixBlock&gt;(*a, srcVec, destOffset, destVec, srcOffset);</span><br><span class="line"><span class="comment">// matrix_operations.h, 49</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果存在<code>matrix_operations.h</code>文件，则按照第四步的步骤在文档中查找<code>axpy()</code>和<code>atxpy()</code>，并且同样修改成第四步中指定的内容。</p>
+</li>
+<li><p>修改<code>config.h</code>头文件用于API声明（如果<code>config.h</code>不存在，则将<code>config.txt</code>后缀改为<code>.h</code>），如下，<strong>使用宏定义之前需要保证在工程属性的<code>预处理器</code>一项中添加预处理器定义<code>G2O_EXPORTS</code>来确保API声明生效</strong>：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> G2O_EXPORTS</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> G2O_API __declspec(dllexport)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> G2O_API __declspec(dllimport)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对工程内的头文件引入<code>config.h</code>且添加API声明，针对类型声明<code>class XXX</code>改为<code>class G2O_API XXX</code>，结构体声明<code>struct XXX</code>改为<code>struct G2O_API XXX</code>，注意<strong>这里只需要对有对应<code>.cpp</code>而没有对应<code>.hpp</code>文件的头文件进行修改即可</strong>：</p>
+</li>
+</ol>
+<ul>
+<li><strong>bathc_stats.h</strong>：修改<code>G2OBatchStatistics</code>结构体。</li>
+<li><strong>cache.h</strong>：修改<code>CacheContainer</code>、<code>Cache</code>等类。</li>
+<li><strong>creators.h</strong>：修改<code>AbstractHyperGraphElementCreator</code>、<code>HyperGraphElementCreator</code>等类。</li>
+<li><strong>estimate_propagator.h</strong>：修改<code>EstimatePropagatorCost</code>、<code>EstimatePropagatorCostOdometry</code>、<code>EstimatePropagator</code>等类。</li>
+<li><strong>factory.h</strong>：修改<code>AbstractHyperGraphElementCreator</code>、<code>Factory</code>、<code>RegisterTypeProxy</code>等类。</li>
+<li><strong>hyper_dijkstra.h</strong>：修改<code>HyperDijkstra</code>、<code>UniformCostFunction</code>等结构体。</li>
+<li><strong>hyper_graph.h</strong>：修改<code>HyperGraph</code>类。</li>
+<li><strong>hyper_graph_action.h</strong>：修改<code>HyperGraphAction</code>、<code>HyperGraphElementAction</code>、<code>HyperGraphElementActionCollection</code>、<code>HyperGraphActionLibrary</code>、<code>WriteGnuplotAction</code>、<code>DrawAction</code>等类型，修改<code>RegisterActionProxy</code>模板类。</li>
+<li><strong>jacobian_workspace.h</strong>：修改<code>OptimizableGraph</code>、<code>JacobianWorkspace</code>等类。</li>
+<li><strong>marginal_covariance_cholesky.h</strong>：修改<code>MarginalCovarianceCholesky</code>类。</li>
+<li><strong>matrix_structure.h</strong>：修改<code>MatrixStructure</code>类。</li>
+<li><strong>openmp_mutex</strong>：修改<code>OpenMPMutex</code>、<code>ScopedOpenMPMutex</code>等类。</li>
+<li><strong>optimizable_graph.h</strong>：修改<code>OptimizableGraph</code>结构体，修改<code>HyperGraphAction</code>、<code>OptimizationAlgorithmProperty</code>、<code>Cache</code>、<code>CacheContainer</code>、<code>RobustKernel</code>等类型。</li>
+<li><strong>optimization_algorithm.h</strong>：修改<code>SparseOptimizer</code>、<code>OptimizationAlgorithm</code>等类型。</li>
+<li><strong>optimization_algorithm_factory.h</strong>：修改<code>OptimizationAlgorithm</code>、<code>SparseOptimizer</code>、<code>AbstractOptimizationAlgorithmCreator</code>、<code>OptimizationAlgorithmFactory</code>、<code>RegisterOptimizationAlgorithmProxy</code>等类型。</li>
+<li><strong>optimization_algorithm_levenberg.h</strong>：修改<code>OptimizationAlgorithmLevenberg</code>等类型。</li>
+<li><strong>optimization_algorithm_with_hessian.h</strong>：修改<code>Solver</code>、<code>OptimizationAlgorithmWithHessian</code>等类型。</li>
+<li><strong>parameter.h</strong>：修改<code>Parameter</code>类。</li>
+<li><strong>parameter_container.h</strong>：修改<code>Parameter</code>、<code>ParameterContainer</code>等类。</li>
+<li><strong>property.h</strong>：修改<code>BaseProperty</code>、<code>PropertyMap</code>等类，修改<code>Property</code>模板类型。</li>
+<li><strong>robust_kernel.h</strong>：修改<code>RobustKernel</code>类。</li>
+<li><strong>robust_kernel_factory.h</strong>：修改<code>RobustKernel</code>、<code>AbstractRobustKernelCreator</code>、<code>RobustKernelFactory</code>等类型，修改<code>RobustKernelCreator</code>、<code>RegisterRobustKernelProxy</code>等模板类。</li>
+<li><strong>robust_kernel_impl.h</strong>：修改<code>RobustKernelScaleDelta</code>、<code>RobustKernelHuber</code>、<code>RobustKernelTukey</code>、<code>RobustKernelPseudoHuber</code>、<code>RobustKernelCauchy</code>、<code>RobustKernelSaturated</code>、<code>RobustKernelDCS</code>等类型。</li>
+<li><strong>solver.h</strong>：修改<code>SparseOptimizer</code>、<code>Solver</code>等类型。</li>
+<li><strong>sparse_optimizer.h</strong>：修改<code>ActivePathCostFunction</code>、<code>OptimizationAlgorithm</code>、<code>EstimatePropagatorCost</code>、<code>SparseOptimizer</code>等类型。</li>
+<li><strong>types_sba.h</strong>：修改<code>VertexSBAPointXYZ</code>类。</li>
+<li><strong>types_seven_dof_expmap.h</strong>：修改<code>VertexSim3Expmap</code>、<code>EdgeSim3</code>、<code>EdgeSim3ProjectXYZ</code>、<code>EdgeInverseSim3ProjectXYZ</code>等类型。</li>
+<li><strong>types_six_dof_expmap.h</strong>：修改<code>VertexSE3Expmap</code>、<code>EdgeSE3ProjectXYZ</code>、<code>EdgeStereoSE3ProjectXYZ</code>、<code>EdgeSE3ProjectXYZOnlyPose</code>、<code>EdgeStereoSE3ProjectXYZOnlyPose</code>等类型。</li>
+</ul>
+<ol start="8">
+<li>右键点击g2o项目并<code>重新生成</code>，或者点击<code>本地Windows调试器</code>来编译工程。</li>
+</ol>
+<h3 id="编译ORB-SLAM2"><a href="#编译ORB-SLAM2" class="headerlink" title="编译ORB_SLAM2"></a>编译ORB_SLAM2</h3><p>编译ORB_SLAM2过程如下：</p>
+<ol>
+<li>通过CMake构建<code>X64</code>工程文件，删除所有<code>FIND_PACKAGE</code>指令。</li>
+<li>打开工程文件，选择目标为<code>Release X64</code>，运行库设置为<code>多线程MT</code>，命令行输入<code>/machine:X64</code>，并且将ORB_SLAM2设置为启动项目。</li>
+<li><p>确认和添加相应的头文件包含目录，按顺序排列主要有：</p>
+<ul>
+<li><strong>ORB_SLAM2自身的包含目录</strong>。</li>
+<li><strong>Eigen3的包含目录</strong>。</li>
+<li><strong>Pangolin的包含目录</strong>，包括<code>${Pangolin}/include</code>、<code>${Pangolin}/build/src/include</code>等目录。</li>
+<li><strong>DBoW2自身的包含目录</strong>和<strong>DLib的包含目录</strong>。</li>
+<li><strong>OpenCV的三个包含目录</strong>，也可以是一个目录但是需要调整源代码。</li>
+<li><strong>glew的包含目录</strong>。</li>
+<li><strong>g2o的包含目录</strong>，注意需要包含<code>config.h</code>文件。</li>
+</ul>
+</li>
+<li><p>确认和添加相应的库目录和依赖库文件，按顺序排列主要有：    </p>
+<ul>
+<li>系统内置依赖库，包括<code>opengl32.lib</code>、<code>glu32.lib</code>、<code>mfplat.lib</code>、<code>mfreadwrite.lib</code>、<code>mfuuid.lib</code>、<code>strmiids.lib</code>、<code>mf.lib</code>。</li>
+<li>OpenCV的<code>X64</code>位库目录，包括<code>opencv_world341.lib</code>。</li>
+<li>Pangolin工程内包含的glew库目录，包括<code>glew.lib</code>。</li>
+<li>Pangolin库目录、包括<code>pangolin.lib</code>。</li>
+<li>ORB_SLAM2内包含的DBoW2库目录，包括<code>DBoW2.lib</code>。</li>
+<li>ORB_SLAM2内包含的g2o库目录，包括<code>g2o.lib</code>。</li>
+</ul>
+</li>
+<li><p>右键点击ORB_SLAM2项目并<code>重新生成</code>，或者点击<code>本地Windows调试器</code>来编译工程。</p>
+</li>
+</ol>
+<p>编译过程中可能会发生以下问题：</p>
+<blockquote>
+<p>表达式必须含有常量值<br>不可指定数组类型float [N][N]</p>
+</blockquote>
+<p><strong>解决方法</strong>：VC++中不允许用运行时常量去定义数组长度，因此需要进行如下修改，动态创建二维数组：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">float</span>** Distances = <span class="keyword">new</span> <span class="keyword">float</span>*[N];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++)</span><br><span class="line">&#123;</span><br><span class="line">	Distance[i] = <span class="keyword">new</span> <span class="keyword">float</span>[N];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>‘usleep’找不到标识符</p>
+</blockquote>
+<p><strong>解决方法</strong>：<code>usleep()</code>是在Linux上使用的函数，需要修改成以下函数中的一种：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line">Sleep(<span class="number">3000</span>); <span class="comment">// 单位为毫秒，需要换算微秒</span></span><br><span class="line"><span class="built_in">std</span>::this_thread::sleep_for(<span class="built_in">std</span>::chrono::microseconds(m)); <span class="comment">// 可以直接替换usleep()</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>C1083 无法打开包括文件：stdint-gcc.h：No such file or directory</p>
+</blockquote>
+<p><strong>解决方法</strong>：将<code>stdint-gcc.h</code>改为<code>stdint.h</code>。</p>
+<blockquote>
+<p>C1001 编译器内部错误</p>
+</blockquote>
+<p><strong>解决方法</strong>：仍然是由于g2o模块中的<code>axpy()</code>和<code>atxpy()</code>方法造成的错误，请<strong>参考上方编译g2o中的第四步</strong>。</p>
+<blockquote>
+<p>C2872 “ACCESS_MASK” 不明确的符号</p>
+</blockquote>
+<p><strong>解决方法</strong>：由于<code>winnt.h</code>和OpenCV都定义了<code>ACCESS_MASK</code>，如果使用<code>using namespace cv</code>会导致混淆，因此只能以<code>using cv::XXX</code>的形式引用命名空间。</p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>可以在ORB_SLAM2项目中添加<code>Main.cpp</code>以及主函数，并且修改工程的输出类型为<strong>应用程序</strong>，最后可编译成基于ORB_SLAM2的可执行程序。</p>
+<h3 id="基于SLAM的AR示例"><a href="#基于SLAM的AR示例" class="headerlink" title="基于SLAM的AR示例"></a>基于SLAM的AR示例</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/core/core.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/imgproc/imgproc.hpp&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"System.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"ViewerAR.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> ORB_SLAM2;</span><br><span class="line"><span class="keyword">using</span> cv::VideoCapture;</span><br><span class="line"><span class="keyword">using</span> cv::Mat;</span><br><span class="line"><span class="keyword">using</span> cv::FileStorage;</span><br><span class="line"></span><br><span class="line">ORB_SLAM2::ViewerAR ar;</span><br><span class="line"><span class="keyword">bool</span> bRGB = <span class="literal">true</span>;</span><br><span class="line">Mat K;</span><br><span class="line">Mat DistCoef;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ImageGrabber</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	ImageGrabber(System* pSLAM) : mpSLAM(pSLAM)&#123;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">GrabImage</span><span class="params">(<span class="keyword">const</span> cv::Mat&amp; msg)</span></span>;</span><br><span class="line">	System* mpSLAM;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span>* arg1 = <span class="string">"F:\\SLAM\\Source\\ORB_SLAM2\\Vocabulary\\ORBvoc.txt"</span>;</span><br><span class="line">	<span class="keyword">char</span>* arg2 = <span class="string">"F:\\SLAM\\Source\\ORB_SLAM2\\Examples\\Monocular\\TUM2.yaml"</span>;</span><br><span class="line">	<span class="function">System <span class="title">orbslam</span><span class="params">(arg1, arg2, System::eSensor::MONOCULAR, <span class="literal">true</span>)</span></span>;</span><br><span class="line">	<span class="function">ImageGrabber <span class="title">igb</span><span class="params">(&amp;orbslam)</span></span>;</span><br><span class="line">	ar.SetSLAM(&amp;orbslam);</span><br><span class="line">	<span class="function">FileStorage <span class="title">fSettings</span><span class="params">(arg2, FileStorage::READ)</span></span>;</span><br><span class="line">	bRGB = <span class="keyword">static_cast</span>&lt;<span class="keyword">bool</span>&gt;((<span class="keyword">int</span>)fSettings[<span class="string">"Camera.RGB"</span>]);</span><br><span class="line">	<span class="keyword">float</span> fps = fSettings[<span class="string">"Camera.fps"</span>];</span><br><span class="line">	ar.SetFPS(fps);</span><br><span class="line">	<span class="keyword">float</span> fx = fSettings[<span class="string">"Camera.fx"</span>];</span><br><span class="line">	<span class="keyword">float</span> fy = fSettings[<span class="string">"Camera.fy"</span>];</span><br><span class="line">	<span class="keyword">float</span> cx = fSettings[<span class="string">"Camera.cx"</span>];</span><br><span class="line">	<span class="keyword">float</span> cy = fSettings[<span class="string">"Camera.cy"</span>];</span><br><span class="line">	ar.SetCameraCalibration(fx, fy, cx, cy);</span><br><span class="line"></span><br><span class="line">	K = Mat::eye(<span class="number">3</span>, <span class="number">3</span>, CV_32F);</span><br><span class="line">	K.at&lt;<span class="keyword">float</span>&gt;(<span class="number">0</span>, <span class="number">0</span>) = fx;</span><br><span class="line">	K.at&lt;<span class="keyword">float</span>&gt;(<span class="number">1</span>, <span class="number">1</span>) = fy;</span><br><span class="line">	K.at&lt;<span class="keyword">float</span>&gt;(<span class="number">0</span>, <span class="number">2</span>) = cx;</span><br><span class="line">	K.at&lt;<span class="keyword">float</span>&gt;(<span class="number">1</span>, <span class="number">2</span>) = cy;</span><br><span class="line"></span><br><span class="line">	DistCoef = cv::Mat::zeros(<span class="number">4</span>, <span class="number">1</span>, CV_32F);</span><br><span class="line">	DistCoef.at&lt;<span class="keyword">float</span>&gt;(<span class="number">0</span>) = fSettings[<span class="string">"Camera.k1"</span>];</span><br><span class="line">	DistCoef.at&lt;<span class="keyword">float</span>&gt;(<span class="number">1</span>) = fSettings[<span class="string">"Camera.k2"</span>];</span><br><span class="line">	DistCoef.at&lt;<span class="keyword">float</span>&gt;(<span class="number">2</span>) = fSettings[<span class="string">"Camera.p1"</span>];</span><br><span class="line">	DistCoef.at&lt;<span class="keyword">float</span>&gt;(<span class="number">3</span>) = fSettings[<span class="string">"Camera.p2"</span>];</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">float</span> k3 = fSettings[<span class="string">"Camera.k3"</span>];</span><br><span class="line">	<span class="keyword">if</span> (k3 != <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		DistCoef.resize(<span class="number">5</span>);</span><br><span class="line">		DistCoef.at&lt;<span class="keyword">float</span>&gt;(<span class="number">4</span>) = k3;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	thread tViewer = thread(&amp;ORB_SLAM2::ViewerAR::Run, &amp;ar);</span><br><span class="line"></span><br><span class="line">	<span class="function">VideoCapture <span class="title">cap</span><span class="params">(<span class="number">0</span>)</span></span>;</span><br><span class="line">	Mat frame;</span><br><span class="line">	<span class="keyword">bool</span> stop = <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">while</span> (!stop)</span><br><span class="line">	&#123;</span><br><span class="line">		cap &gt;&gt; frame;</span><br><span class="line">		igb.GrabImage(frame);</span><br><span class="line">		<span class="keyword">if</span> (cvWaitKey(<span class="number">30</span>) &gt;= <span class="number">0</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			stop = <span class="literal">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line">	<span class="keyword">delete</span> arg1;</span><br><span class="line">	<span class="keyword">delete</span> arg2;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> ImageGrabber::GrabImage(<span class="keyword">const</span> Mat&amp; msg)</span><br><span class="line">&#123;</span><br><span class="line">	Mat im = msg.clone();</span><br><span class="line">	Mat imu;</span><br><span class="line">	Mat Tcw = mpSLAM-&gt;TrackMonocular(msg, <span class="number">0</span>);</span><br><span class="line">	<span class="keyword">int</span> state = mpSLAM-&gt;GetTrackingState();</span><br><span class="line"></span><br><span class="line">	mpSLAM-&gt;TrackMonocular(msg, clock());</span><br><span class="line">	<span class="built_in">vector</span>&lt;ORB_SLAM2::MapPoint*&gt; vMPs = mpSLAM-&gt;GetTrackedMapPoints();</span><br><span class="line">	<span class="built_in">vector</span>&lt;cv::KeyPoint&gt; vKeys = mpSLAM-&gt;GetTrackedKeyPointsUn();</span><br><span class="line"></span><br><span class="line">	cv::undistort(im, imu, K, DistCoef);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (bRGB)</span><br><span class="line">	&#123;</span><br><span class="line">		cv::cvtColor(imu, imu, CV_RGB2BGR);</span><br><span class="line">		ar.SetImagePose(imu, Tcw, state, vKeys, vMPs);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		cv::cvtColor(imu, imu, CV_RGB2BGR);</span><br><span class="line">		ar.SetImagePose(imu, Tcw, state, vKeys, vMPs);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="文件解析"><a href="#文件解析" class="headerlink" title="文件解析"></a>文件解析</h2><ul>
+<li>cv_bridge.h：ROS图像与OpenCV图像之间的转换</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    ViewRO Technical Dept.
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://viewro.github.io/计算机科学/机器视觉/orb-slam2/" title="ORB_SLAM2 在 Windows 下编译">http://viewro.github.io/计算机科学/机器视觉/orb-slam2/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ORB-SLAM2/" rel="tag"># ORB_SLAM2</a>
+          
+            <a href="/tags/SLAM/" rel="tag"># SLAM</a>
+          
+            <a href="/tags/机器视觉/" rel="tag"># 机器视觉</a>
+          
+            <a href="/tags/计算机科学/" rel="tag"># 计算机科学</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/uncategorized/home/" rel="next" title="ViewRO知识库首页">
+                <i class="fa fa-chevron-left"></i> ViewRO知识库首页
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">ViewRO Technical Dept.</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">1.</span> <span class="nav-text">参考资料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#必要组件"><span class="nav-number">2.</span> <span class="nav-text">必要组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#可选组件"><span class="nav-number">2.1.</span> <span class="nav-text">可选组件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译基础"><span class="nav-number">3.</span> <span class="nav-text">编译基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译流程"><span class="nav-number">4.</span> <span class="nav-text">编译流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装CMake"><span class="nav-number">4.1.</span> <span class="nav-text">安装CMake</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译OpenCV"><span class="nav-number">4.2.</span> <span class="nav-text">编译OpenCV</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译Pangolin"><span class="nav-number">4.3.</span> <span class="nav-text">编译Pangolin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译Eigen3"><span class="nav-number">4.4.</span> <span class="nav-text">编译Eigen3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译DBoW2"><span class="nav-number">4.5.</span> <span class="nav-text">编译DBoW2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译g2o"><span class="nav-number">4.6.</span> <span class="nav-text">编译g2o</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译ORB-SLAM2"><span class="nav-number">4.7.</span> <span class="nav-text">编译ORB_SLAM2</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例"><span class="nav-number">5.</span> <span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基于SLAM的AR示例"><span class="nav-number">5.1.</span> <span class="nav-text">基于SLAM的AR示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件解析"><span class="nav-number">6.</span> <span class="nav-text">文件解析</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ViewRO Technical Dept.</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">3.4k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
