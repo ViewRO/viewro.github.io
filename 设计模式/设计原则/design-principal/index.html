@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="面向对象设计,设计模式,SOLID原则," />
 
 
 
@@ -86,13 +86,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="ViewRO Library">
-<meta property="og:url" content="http://viewro.github.io/archives/2018/index.html">
+<meta name="description" content="概论无论是进行软件体系结构设计，或者是在高层次进行抽象，有以下几种设计原则能够帮助开发者写出更好的代码：  面向接口编程：避免面向实现编程，尽量使用OOP原则写出可扩展性强的代码。在系统分析和架构中，分清层次和依赖关系，每个层次不是直接向其上层提供服务（即不是直接实例化在上层中），而是通过定义一组接口，仅向上层暴露其接口功能，上层对于下层仅仅是接口依赖，而不依赖具体类。  面向接口编程思想与面向对">
+<meta name="keywords" content="面向对象设计,设计模式,SOLID原则">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面向对象的设计原则">
+<meta property="og:url" content="http://viewro.github.io/设计模式/设计原则/design-principal/index.html">
 <meta property="og:site_name" content="ViewRO Library">
+<meta property="og:description" content="概论无论是进行软件体系结构设计，或者是在高层次进行抽象，有以下几种设计原则能够帮助开发者写出更好的代码：  面向接口编程：避免面向实现编程，尽量使用OOP原则写出可扩展性强的代码。在系统分析和架构中，分清层次和依赖关系，每个层次不是直接向其上层提供服务（即不是直接实例化在上层中），而是通过定义一组接口，仅向上层暴露其接口功能，上层对于下层仅仅是接口依赖，而不依赖具体类。  面向接口编程思想与面向对">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-02-19T03:33:12.739Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ViewRO Library">
+<meta name="twitter:title" content="面向对象的设计原则">
+<meta name="twitter:description" content="概论无论是进行软件体系结构设计，或者是在高层次进行抽象，有以下几种设计原则能够帮助开发者写出更好的代码：  面向接口编程：避免面向实现编程，尽量使用OOP原则写出可扩展性强的代码。在系统分析和架构中，分清层次和依赖关系，每个层次不是直接向其上层提供服务（即不是直接实例化在上层中），而是通过定义一组接口，仅向上层暴露其接口功能，上层对于下层仅仅是接口依赖，而不依赖具体类。  面向接口编程思想与面向对">
 
 
 
@@ -122,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="http://viewro.github.io/archives/2018/"/>
+  <link rel="canonical" href="http://viewro.github.io/设计模式/设计原则/design-principal/"/>
 
 
 
 
 
-  <title>归档 | ViewRO Library</title>
+  <title>面向对象的设计原则 | ViewRO Library</title>
   
 
 
@@ -147,7 +152,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -275,111 +280,280 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
-
-      <span class="archive-page-counter">
-        
-        
-        
-          
-        
-        嗯..! 目前共计 5 篇日志。 继续努力。
-      </span>
-
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
-
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://viewro.github.io/设计模式/设计原则/design-principal/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ViewRO Technical Dept.">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ViewRO Library">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/计算机科学/机器视觉/orb-slam2/" itemprop="url">
-              
-                <span itemprop="name">ORB_SLAM2 在 Windows 下编译</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">面向对象的设计原则</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-06-05T14:38:08+08:00"
-              content="2018-06-05" >
-          06-05
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-19T11:31:51+08:00">
+                2019-02-19
+              </time>
+            
 
-    </header>
-  </article>
+            
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-02-19T11:33:12+08:00">
+                2019-02-19
+              </time>
+            
+          </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/设计原则/" itemprop="url" rel="index">
+                    <span itemprop="name">设计原则</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  928
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/uncategorized/home/" itemprop="url">
-              
-                <span itemprop="name">ViewRO知识库首页</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-06-05T14:00:00+08:00"
-              content="2018-06-05" >
-          06-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
+      
+        <h2 id="概论"><a href="#概论" class="headerlink" title="概论"></a>概论</h2><p>无论是进行软件体系结构设计，或者是在高层次进行抽象，有以下几种设计原则能够帮助开发者写出更好的代码：</p>
+<ul>
+<li><strong>面向接口编程</strong>：避免面向实现编程，尽量使用OOP原则写出可扩展性强的代码。在系统分析和架构中，分清层次和依赖关系，每个层次不是直接向其上层提供服务（即不是直接实例化在上层中），而是通过定义一组接口，仅向上层暴露其接口功能，上层对于下层仅仅是接口依赖，而不依赖具体类。<blockquote>
+<ol>
+<li>面向接口编程思想与面向对象不冲突，而与面向实现冲突。面向实现意味着强烈的依赖关系，基于这种思想下的变量都指向特定类型的实例，且这些类型之间将没有任何关系。</li>
+<li>面向接口编程中的接口，并不指代具体的<code>interface</code>关键字相关的内容，而是指代任意的暴露的公共成员。</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<h2 id="SOLID原则"><a href="#SOLID原则" class="headerlink" title="SOLID原则"></a>SOLID原则</h2><p><strong>SOLID原则</strong>是面向对象编程和变相对象设计的五个基本原则，当这些原则一起被应用时，能够使得程序更加容易维护和扩展，分别如下所示：</p>
+<ul>
+<li><p><strong>S（The Single Responsibility Principle，单一职责原则）</strong>：每个类型应该只有一个单一的功能，并且该功能应该由这个类完全封装起来。但是在某些特殊情况下，因为某种原因，职责不得不被分化成粒度更细的多个职责，这个现象为职责扩散。这时我们需要确保的是，虽然不能再保持类型的单一职责，但是仍然需要保持方法的单一职责。</p>
+</li>
+<li><p><strong>O（The Open Closed Principle，开放封闭原则）</strong>：实体对扩展（Extension）开放，对修改（Modification）原有代码保持封闭。这里的扩展指的是新增类型，修改已有的功能只需要修改对应的类型，避免对已有实体造成影响。</p>
+</li>
+<li><p><strong>L（Liskov Substitution Principle，里氏替换原则）</strong>：一个对象出现在任何地方时，都可以用子类实例作为替换，而且不会导致程序错误。</p>
+<blockquote>
+<p>举例：正方形不是长方形的子类，正方形通过平方求得面积，且其边长相等。而长方形边长不等，且通过长宽乘积求得面积。如果使用长方形实例替换正方形实例则会导致实际结果与预期不符。</p>
+</blockquote>
+</li>
+<li><p><strong>I（The Interface Segregation Principle，接口分离原则）</strong>：不能强迫依赖不使用的方法，如果在一个类实现的接口中包含了它不需要的方法，则需要将接口拆分成更小和更具体的接口。这里的不需要指不进行任何操作的方法。</p>
+</li>
+<li><p><strong>D（The Dependency Inversion Principle，依赖倒置原则）</strong>：高层次模块不应该依赖低层次模块，应该都依赖于抽象。并且抽象不应该依赖于具体实现。</p>
+<blockquote>
+<p>举例：如果A类依赖B类，该情况下A类是高层次模块（可能负责复杂的业务逻辑），B类是低层次模块（负责原子操作）。当需要把A类依赖B类的部分修改成依赖C类时，则必须要通过修改A类的代码，导致不必要的风险。因此需要让A类依赖某个接口I，而B类和C类则分别去实现接口I。</p>
+</blockquote>
+</li>
+</ul>
+<hr>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>[1]<a href="https://juejin.im/entry/59e07b52f265da432a7a98b4?utm_source=gold_browser_extension" target="_blank" rel="noopener">https://juejin.im/entry/59e07b52f265da432a7a98b4?utm_source=gold_browser_extension</a><br>[2]<a href="https://www.cnblogs.com/wuyuegb2312/p/7011708.html" target="_blank" rel="noopener">https://www.cnblogs.com/wuyuegb2312/p/7011708.html</a><br>[3]<a href="https://blog.csdn.net/zhengzhb/article/details/7289269" target="_blank" rel="noopener">https://blog.csdn.net/zhengzhb/article/details/7289269</a></p>
+
+      
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    ViewRO Technical Dept.
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://viewro.github.io/设计模式/设计原则/design-principal/" title="面向对象的设计原则">http://viewro.github.io/设计模式/设计原则/design-principal/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/面向对象设计/" rel="tag"># 面向对象设计</a>
+          
+            <a href="/tags/设计模式/" rel="tag"># 设计模式</a>
+          
+            <a href="/tags/SOLID原则/" rel="tag"># SOLID原则</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/开发/C/csharp-delegate/" rel="next" title="C#中的委托">
+                <i class="fa fa-chevron-left"></i> C#中的委托
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -387,6 +561,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -407,8 +585,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -468,6 +655,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概论"><span class="nav-number">1.</span> <span class="nav-text">概论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SOLID原则"><span class="nav-number">2.</span> <span class="nav-text">SOLID原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -639,6 +842,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
